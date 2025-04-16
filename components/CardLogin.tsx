@@ -1,0 +1,28 @@
+import { useMedia } from "react-use";
+import React, { ReactNode, useEffect, useState } from "react";
+
+// Komponen CardLogin dengan dua kolom isi
+export default function CardLogin({ children }: { children: ReactNode }) {
+    const [hasMounted, setHasMounted] = useState(false);
+    const isDarkMode = useMedia("(prefers-color-scheme: dark)", false);
+
+    // Tunggu sampai komponen dimount
+    useEffect(() => {
+        setHasMounted(true);
+    }, []);
+
+    // Jangan render apapun sebelum dimount
+    if (!hasMounted) return null;
+
+    return (
+        <div
+            className={`rounded-xl shadow-lg w-full px-6 py-8 sm:px-8 sm:py-10 md:px-10 md:py-12 lg:px-12`}
+            style={{
+                background: isDarkMode ? "#18171F" : "#f5f5f7",
+            }}
+        >
+            {/* Render semua elemen anak */}
+            {children}
+        </div>
+    );
+}
