@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { IoCloud, IoRainy } from "react-icons/io5";
 import LogoBMKG from "@/components/common/LogoBMKG";
 import { HiOutlineChevronLeft } from "react-icons/hi";
-import SidebarItem from "@/interface/common/SidebarItem";
+import SidebarItem from "@/components/common/SidebarItem";
 import { FaHome, FaGlobeAsia, FaSignOutAlt } from "react-icons/fa";
 
 export default function Sidebar() {
@@ -61,6 +61,7 @@ export default function Sidebar() {
                     collapsed={collapsed}
                     active={pathname === "/dashboard"}
                     icon={<FaHome className="w-5 h-5" />}
+                    title={collapsed ? "Dashboard" : undefined}
                 />
                 {/* Item Iklim */}
                 <SidebarItem
@@ -68,6 +69,7 @@ export default function Sidebar() {
                     collapsed={collapsed}
                     active={pathname === "/pengaturan"}
                     icon={<IoCloud className="w-5 h-5" />}
+                    title={collapsed ? "Iklim" : undefined}
                 />
                 {/* Item Geofisika */}
                 <SidebarItem
@@ -75,6 +77,7 @@ export default function Sidebar() {
                     collapsed={collapsed}
                     active={pathname === "/profil"}
                     icon={<FaGlobeAsia className="w-5 h-5" />}
+                    title={collapsed ? "Geofisika" : undefined}
                 />
                 {/* Item Pos Hujan */}
                 <SidebarItem
@@ -82,6 +85,7 @@ export default function Sidebar() {
                     collapsed={collapsed}
                     active={pathname === "/pengaturan"}
                     icon={<IoRainy className="w-5 h-5" />}
+                    title={collapsed ? "Pos Hujan" : undefined}
                 />
             </nav>
 
@@ -91,6 +95,7 @@ export default function Sidebar() {
                     label="Keluar"
                     collapsed={collapsed}
                     icon={<FaSignOutAlt className="w-5 h-5" />}
+                    title={collapsed ? "Keluar" : undefined}
                 />
             </div>
 
