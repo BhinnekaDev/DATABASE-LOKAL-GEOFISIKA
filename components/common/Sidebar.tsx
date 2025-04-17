@@ -8,47 +8,48 @@ import SidebarItem from "@/components/common/SidebarItem";
 import { FaHome, FaGlobeAsia, FaSignOutAlt } from "react-icons/fa";
 
 export default function Sidebar() {
-    const pathname = usePathname(); // Path saat ini
-    const [isClient, setIsClient] = useState(false); // Cek client-side
-    const [collapsed, setCollapsed] = useState(false); // Sidebar collapse
+    const pathname = usePathname(); // Mendapatkan path saat ini untuk menentukan item sidebar yang aktif
+    const [isClient, setIsClient] = useState(false); // Mengecek apakah aplikasi sedang berjalan di client-side
+    const [collapsed, setCollapsed] = useState(false); // Status apakah sidebar dalam keadaan collapsed
     const isDarkMode = useMedia("(prefers-color-scheme: dark)", false); // Menentukan mode gelap atau terang
+    const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(
+        null
+    ); // Index dropdown yang dibuka
 
     useEffect(() => {
-        setIsClient(true); // Set setelah client render
+        setIsClient(true); // Menandakan bahwa komponen telah di-render di sisi client
         const savedState = localStorage.getItem("sidebarCollapsed");
         if (savedState !== null) {
-            setCollapsed(savedState === "true"); // Ambil dari localStorage
+            setCollapsed(savedState === "true"); // Memeriksa dan mengatur status collapse berdasarkan localStorage
         }
     }, []);
 
     useEffect(() => {
         if (isClient) {
-            localStorage.setItem("sidebarCollapsed", String(collapsed)); // Simpan ke localStorage
+            localStorage.setItem("sidebarCollapsed", String(collapsed)); // Menyimpan status collapse ke localStorage
         }
     }, [collapsed, isClient]);
 
     const toggleSidebar = () => {
-        setCollapsed(!collapsed); // Toggle sidebar
+        setCollapsed(!collapsed); // Toggle status collapse ketika tombol di klik
     };
 
-    if (!isClient) return null; // Hindari render di server
+    if (!isClient) return null; // Menghindari render pada server
 
     return (
         <aside
-            className={`relative h-screen bg-slate-800 text-white flex flex-col shadow-lg transition-all duration-300 ease-in-out ${
+            className={`relative h-screen bg-slate-800 flex flex-col shadow-lg transition-all duration-300 ease-in-out ${
                 collapsed ? "w-16" : "w-64"
             }`}
         >
-            {/* Judul dan Logo Sidebar */}
+            {/* Bagian Header Sidebar dengan Logo dan Judul */}
             <div
                 className={`py-4 flex items-center justify-center border-b border-[#f5f5f7]" ${
                     collapsed ? "flex justify-center" : "flex justify-between"
                 }`}
             >
-                {/* Logo BMKG */}
-                <LogoBMKG />
-
-                {/* Teks "Database Geofisika" hanya tampil jika sidebar tidak collapse */}
+                <LogoBMKG /> {/* Logo BMKG */}
+                {/* Teks "Database Geofisika" hanya tampil jika sidebar tidak collapsed */}
                 {!collapsed && (
                     <p className={`text-md font-bold text-[#f5f5f7]`}>
                         Database Geofisika
@@ -56,7 +57,7 @@ export default function Sidebar() {
                 )}
             </div>
 
-            {/* Navigasi Sidebar */}
+            {/* Bagian Navigasi Sidebar */}
             <nav className="flex-1 p-4 space-y-4 mt-4">
                 {/* Item Dashboard */}
                 <SidebarItem
@@ -65,23 +66,103 @@ export default function Sidebar() {
                     active={pathname === "/dashboard"}
                     icon={<FaHome className="w-5 h-5" />}
                     title={collapsed ? "Dashboard" : undefined}
+                    index={0}
+                    openDropdownIndex={openDropdownIndex}
+                    setOpenDropdownIndex={setOpenDropdownIndex}
                 />
                 {/* Item Iklim */}
                 <SidebarItem
                     label="Iklim"
+                    title="Iklim"
                     collapsed={collapsed}
-                    active={pathname === "/pengaturan"}
+                    active={pathname.startsWith("/iklim")}
                     icon={<IoCloud className="w-5 h-5" />}
-                    title={collapsed ? "Iklim" : undefined}
-                />
+                    index={1}
+                    openDropdownIndex={openDropdownIndex}
+                    setOpenDropdownIndex={setOpenDropdownIndex}
+                >
+                    {/* Dropdown untuk Iklim */}
+                    <SidebarItem
+                        label="Suhu"
+                        title="Suhu"
+                        collapsed={collapsed}
+                        active={pathname === "/iklim/suhu"}
+                        icon={
+                            <span
+                                className={`w-2 h-2 rounded-full ${
+                                    collapsed
+                                        ? `${
+                                              isDarkMode
+                                                  ? "bg-white"
+                                                  : "bg-black"
+                                          }`
+                                        : "bg-white"
+                                }`}
+                            />
+                        }
+                        index={2}
+                        openDropdownIndex={openDropdownIndex}
+                        setOpenDropdownIndex={setOpenDropdownIndex}
+                    />
+                    <SidebarItem
+                        label="Kelembaban"
+                        title="Kelembaban"
+                        collapsed={collapsed}
+                        active={pathname === "/iklim/kelembaban"}
+                        icon={
+                            <span
+                                className={`w-2 h-2 rounded-full ${
+                                    collapsed
+                                        ? `${
+                                              isDarkMode
+                                                  ? "bg-white"
+                                                  : "bg-black"
+                                          }`
+                                        : "bg-white"
+                                }`}
+                            />
+                        }
+                        index={3}
+                        openDropdownIndex={openDropdownIndex}
+                        setOpenDropdownIndex={setOpenDropdownIndex}
+                    />
+                </SidebarItem>
+
                 {/* Item Geofisika */}
                 <SidebarItem
                     label="Geofisika"
+                    title="Geofisika"
                     collapsed={collapsed}
-                    active={pathname === "/profil"}
+                    active={pathname.startsWith("/geofisika")}
                     icon={<FaGlobeAsia className="w-5 h-5" />}
-                    title={collapsed ? "Geofisika" : undefined}
-                />
+                    index={4}
+                    openDropdownIndex={openDropdownIndex}
+                    setOpenDropdownIndex={setOpenDropdownIndex}
+                >
+                    <SidebarItem
+                        label="Gempa"
+                        title="Gempa"
+                        collapsed={collapsed}
+                        active={pathname === "/geofisika/gempa"}
+                        icon={
+                            <span
+                                className={`w-2 h-2 rounded-full ${
+                                    collapsed
+                                        ? `${
+                                              isDarkMode
+                                                  ? "bg-white"
+                                                  : "bg-black"
+                                          }`
+                                        : "bg-white"
+                                }`}
+                            />
+                        }
+                        index={5}
+                        openDropdownIndex={openDropdownIndex}
+                        setOpenDropdownIndex={setOpenDropdownIndex}
+                    />
+                </SidebarItem>
+
                 {/* Item Pos Hujan */}
                 <SidebarItem
                     label="Pos Hujan"
@@ -89,29 +170,36 @@ export default function Sidebar() {
                     active={pathname === "/pengaturan"}
                     icon={<IoRainy className="w-5 h-5" />}
                     title={collapsed ? "Pos Hujan" : undefined}
+                    index={6}
+                    openDropdownIndex={openDropdownIndex}
+                    setOpenDropdownIndex={setOpenDropdownIndex}
                 />
             </nav>
 
             {/* Item Keluar */}
-            <div className="p-4 border-t  border-[#f5f5f7]">
+            <div className="p-4 border-t border-[#f5f5f7]">
                 <SidebarItem
                     label="Keluar"
                     collapsed={collapsed}
+                    active={pathname === "/pengaturan"}
                     icon={<FaSignOutAlt className="w-5 h-5" />}
                     title={collapsed ? "Keluar" : undefined}
+                    index={7}
+                    openDropdownIndex={openDropdownIndex}
+                    setOpenDropdownIndex={setOpenDropdownIndex}
                 />
             </div>
 
-            {/* Ruang kosong di bagian bawah untuk memberikan jarak */}
-            <span className="p-4 border-t  border-[#f5f5f7] mb-5" />
+            {/* Ruang kosong di bagian bawah untuk memberi jarak */}
+            <span className="p-4 border-t border-[#f5f5f7] mb-5" />
 
             {/* Tombol Collapse untuk menyembunyikan/menampilkan sidebar */}
             <button
                 className={`absolute bottom-1 right-4 p-2 hover:cursor-pointer text-[#f5f5f7]`}
-                onClick={toggleSidebar} // Toggle sidebar ketika tombol di klik
+                onClick={toggleSidebar} // Toggle sidebar saat tombol diklik
             >
                 <HiOutlineChevronLeft
-                    className={`w-5 h-5 ${collapsed ? "rotate-180" : ""}`} // Rotasi ikon jika sidebar dalam keadaan collapsed
+                    className={`w-5 h-5 ${collapsed ? "rotate-180" : ""}`}
                 />
             </button>
         </aside>
