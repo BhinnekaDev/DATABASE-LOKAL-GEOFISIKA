@@ -35,17 +35,13 @@ export default function Sidebar() {
 
     return (
         <aside
-            className={`relative h-screen ${
-                isDarkMode ? "bg-[#f5f5f7]" : "bg-[#18171F]"
-            } text-white flex flex-col shadow-lg transition-all duration-300 ease-in-out ${
+            className={`relative h-screen bg-slate-800 text-white flex flex-col shadow-lg transition-all duration-300 ease-in-out ${
                 collapsed ? "w-16" : "w-64"
             }`}
         >
             {/* Judul dan Logo Sidebar */}
             <div
-                className={`py-4 flex items-center justify-center border-b ${
-                    isDarkMode ? "border-[#18171F]" : "border-[#f5f5f7]"
-                } ${
+                className={`py-4 flex items-center justify-center border-b border-[#f5f5f7]" ${
                     collapsed ? "flex justify-center" : "flex justify-between"
                 }`}
             >
@@ -54,11 +50,7 @@ export default function Sidebar() {
 
                 {/* Teks "Database Geofisika" hanya tampil jika sidebar tidak collapse */}
                 {!collapsed && (
-                    <p
-                        className={`text-md font-bold ${
-                            isDarkMode ? "text-[#18171F]" : "text-[#f5f5f7]"
-                        }`}
-                    >
+                    <p className={`text-md font-bold text-[#f5f5f7]`}>
                         Database Geofisika
                     </p>
                 )}
@@ -101,11 +93,7 @@ export default function Sidebar() {
             </nav>
 
             {/* Item Keluar */}
-            <div
-                className={`p-4 border-t ${
-                    isDarkMode ? "border-[#18171F]" : "border-[#f5f5f7]"
-                }`}
-            >
+            <div className="p-4 border-t  border-[#f5f5f7]">
                 <SidebarItem
                     label="Keluar"
                     collapsed={collapsed}
@@ -115,17 +103,11 @@ export default function Sidebar() {
             </div>
 
             {/* Ruang kosong di bagian bawah untuk memberikan jarak */}
-            <span
-                className={`p-4 border-t ${
-                    isDarkMode ? "border-[#18171F]" : "border-[#f5f5f7]"
-                } mb-5`}
-            />
+            <span className="p-4 border-t  border-[#f5f5f7] mb-5" />
 
             {/* Tombol Collapse untuk menyembunyikan/menampilkan sidebar */}
             <button
-                className={`absolute bottom-1 right-4 p-2 hover:cursor-pointer ${
-                    isDarkMode ? "text-[#18171F]" : "text-[#f5f5f7]"
-                }`}
+                className={`absolute bottom-1 right-4 p-2 hover:cursor-pointer text-[#f5f5f7]`}
                 onClick={toggleSidebar} // Toggle sidebar ketika tombol di klik
             >
                 <HiOutlineChevronLeft

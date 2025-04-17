@@ -29,7 +29,7 @@ export default function SidebarItem({
                         : `${
                               // Jika item tidak aktif, gunakan warna default dengan efek hover
                               isDarkMode
-                                  ? "text-[#18171F] hover:bg-[#18171F] hover:text-[#f5f5f7]"
+                                  ? "text-[#f5f5f7] hover:bg-[#18171F] hover:text-[#f5f5f7]"
                                   : "text-[#f5f5f7] hover:bg-[#f5f5f7] hover:text-[#18171F]"
                           } w-full hover:cursor-pointer`
                 }
@@ -60,7 +60,7 @@ export default function SidebarItem({
                     <Tooltip.Content
                         side="right"
                         align="center"
-                        className={`text-sm rounded px-3 py-1 shadow-md z-50 font-semibold
+                        className={`text-sm rounded px-3 py-1 shadow-md z-50 font-semibold text-white
                             ${
                                 isDarkMode
                                     ? "bg-black text-white "
