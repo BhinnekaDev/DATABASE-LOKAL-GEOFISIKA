@@ -61,9 +61,9 @@ const FloatingLabelForm: FC<FloatingLabelFormProps> = ({
                             ? "border-white/50 text-white/50"
                             : "border-black/50 text-black/50"
                     } focus:outline-none focus:ring-0 focus:border-[#135DFB]`}
-                    onFocus={() => setIsFocused(true)} // Fokus input
-                    onBlur={() => setIsFocused(false)} // Hilangkan fokus input
-                    onChange={(e) => setValue(e.target.value)} // Update nilai input
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    onChange={(e) => setValue(e.target.value)}
                 />
 
                 {/* Tombol lihat/simpan password */}

@@ -16,10 +16,9 @@ export default function CardLogin({ children }: { children: ReactNode }) {
 
     return (
         <div
-            className={`rounded-xl shadow-lg w-full px-6 py-8 sm:px-8 sm:py-10 md:px-10 md:py-12 lg:px-12`}
-            style={{
-                background: isDarkMode ? "#18171F" : "#f5f5f7",
-            }}
+            className={`rounded-xl shadow-lg w-full px-6 py-8 sm:px-8 sm:py-10 md:px-10 md:py-12 lg:px-12 ${
+                isDarkMode ? "bg-[#18171F]" : "bg-[#f5f5f7]"
+            }`}
         >
             {/* Render semua elemen anak */}
             {children}

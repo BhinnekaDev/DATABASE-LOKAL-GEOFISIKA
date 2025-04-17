@@ -1,4 +1,5 @@
 import React from "react";
+import { useMedia } from "react-use";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { SidebarItemProps } from "@/interface/common/SidebarItemProps";
 
@@ -10,6 +11,8 @@ export default function SidebarItem({
     active,
     collapsed,
 }: SidebarItemProps) {
+    const isDarkMode = useMedia("(prefers-color-scheme: dark)", false); // Menentukan apakah pengguna menggunakan dark mode
+
     // Isi konten utama item sidebar (ikon + label)
     const content = (
         <button
@@ -17,8 +20,18 @@ export default function SidebarItem({
                 flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-300 ease-in-out
                 ${
                     active
-                        ? "bg-white text-[#18171F] rounded-l-full w-[calc(100%+2rem)]"
-                        : "text-white hover:bg-white hover:text-[#18171F] w-full hover:cursor-pointer"
+                        ? `${
+                              // Jika item aktif, ubah warna latar belakang dan teks
+                              isDarkMode
+                                  ? "bg-[#18171F] text-[#f5f5f7]"
+                                  : "bg-[#f5f5f7] text-[#18171F]"
+                          } rounded-l-full w-[calc(100%+1rem)]`
+                        : `${
+                              // Jika item tidak aktif, gunakan warna default dengan efek hover
+                              isDarkMode
+                                  ? "text-[#18171F] hover:bg-[#18171F] hover:text-[#f5f5f7]"
+                                  : "text-[#f5f5f7] hover:bg-[#f5f5f7] hover:text-[#18171F]"
+                          } w-full hover:cursor-pointer`
                 }
                 ${collapsed ? "justify-center" : "justify-start"}
             `}
@@ -29,7 +42,7 @@ export default function SidebarItem({
             {/* Label hanya ditampilkan jika sidebar tidak collapse */}
             {!collapsed && (
                 <span className={active ? "font-bold" : "font-semibold"}>
-                    {label}
+                    {label} {/* Menampilkan teks label */}
                 </span>
             )}
         </button>
@@ -39,19 +52,28 @@ export default function SidebarItem({
     return collapsed ? (
         <Tooltip.Provider delayDuration={300}>
             <Tooltip.Root>
-                {/* Trigger tooltip saat elemen diklik atau dihover */}
+                {/* Trigger tooltip saat elemen di-hover atau di-klik */}
                 <Tooltip.Trigger asChild>{content}</Tooltip.Trigger>
 
-                {/* Konten tooltip */}
+                {/* Konten tooltip, yang akan muncul di sebelah kanan item */}
                 <Tooltip.Portal>
                     <Tooltip.Content
                         side="right"
                         align="center"
-                        className="bg-black text-white text-sm rounded px-3 py-1 shadow-md z-50"
+                        className={`text-sm rounded px-3 py-1 shadow-md z-50 font-semibold
+                            ${
+                                isDarkMode
+                                    ? "bg-black text-white "
+                                    : "bg-white text-black"
+                            }
+                        `}
                     >
-                        {title} {/* Teks yang ditampilkan dalam tooltip */}
-                        <Tooltip.Arrow className="fill-gray-800" />{" "}
-                        {/* Panah kecil pada tooltip */}
+                        {title} {/* Menampilkan teks judul dari tooltip */}
+                        <Tooltip.Arrow
+                            className={`${
+                                isDarkMode ? "fill-black" : "fill-white"
+                            }`}
+                        />
                     </Tooltip.Content>
                 </Tooltip.Portal>
             </Tooltip.Root>
