@@ -60,10 +60,10 @@ export default function SidebarItem({
                     <Tooltip.Content
                         side="right"
                         align="center"
-                        className={`text-sm rounded px-3 py-1 shadow-md z-50 font-semibold text-white
+                        className={`text-sm rounded px-3 py-1 shadow-md z-50 font-semibold
                             ${
                                 isDarkMode
-                                    ? "bg-black text-white "
+                                    ? "bg-black text-white"
                                     : "bg-white text-black"
                             }
                         `}
