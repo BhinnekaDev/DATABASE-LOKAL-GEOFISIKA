@@ -3,8 +3,8 @@ import React, { ReactNode, useEffect, useState } from "react";
 
 // Komponen CardLogin dengan dua kolom isi
 export default function CardLogin({ children }: { children: ReactNode }) {
-    const [hasMounted, setHasMounted] = useState(false);
-    const isDarkMode = useMedia("(prefers-color-scheme: dark)", false);
+    const [hasMounted, setHasMounted] = useState(false); // State untuk mengecek apakah komponen sudah dimounting
+    const isDarkMode = useMedia("(prefers-color-scheme: dark)", false); // Mengecek apakah mode gelap aktif
 
     // Tunggu sampai komponen dimount
     useEffect(() => {

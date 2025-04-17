@@ -6,6 +6,7 @@ import LogoBmkg from "@/public/Logo-BMKG.png";
 export default function LogoBMKG() {
     return (
         <div className="p-3 w-fit">
+            {/* Membungkus logo dengan padding dan lebar sesuai konten */}
             {/* Menampilkan gambar logo dengan ukuran 12x12 dan prioritas load */}
             <Image
                 src={LogoBmkg}

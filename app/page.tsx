@@ -1,14 +1,17 @@
 "use client";
 import React from "react";
 import { useMedia } from "react-use";
-import LogoBMKG from "@/components/LogoBMKG";
-import CardLogin from "@/components/CardLogin";
+import { useRouter } from "next/navigation";
+import Button from "@/components/common/Button";
+import CardLogin from "@/components/auth/CardLogin";
+import LogoBMKG from "@/components/common/LogoBMKG";
 import { FaEnvelope, FaLock } from "react-icons/fa";
-import BackgroundLogin from "@/components/BackgroundLogin";
-import FloatingLabelForm from "@/components/FloatingLabelForm";
+import BackgroundLogin from "@/components/auth/BackgroundLogin";
+import FloatingLabelForm from "@/components/common/FloatingLabelForm";
 
 export default function Login() {
-    const isDarkMode = useMedia("(prefers-color-scheme: dark)", false);
+    const router = useRouter(); // Inisialisasi router untuk navigasi
+    const isDarkMode = useMedia("(prefers-color-scheme: dark)", false); // Mengetahui mode gelap atau terang yang digunakan
 
     return (
         <section className="font-[family-name:var(--font-lexend)] min-h-screen flex items-center justify-center">
@@ -44,7 +47,14 @@ export default function Login() {
                             </div>
 
                             {/* Form login */}
-                            <form className="w-full mt-5 flex flex-col gap-6">
+                            <form
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    router.push("/dashboard");
+                                }}
+                                className="w-full mt-5 flex flex-col gap-6"
+                            >
+                                {/* Input email */}
                                 <FloatingLabelForm
                                     type="email"
                                     label="Email"
@@ -52,6 +62,7 @@ export default function Login() {
                                     placeholder="contoh@email.com"
                                 />
 
+                                {/* Input kata sandi */}
                                 <FloatingLabelForm
                                     type="password"
                                     icon={<FaLock />}
@@ -60,16 +71,19 @@ export default function Login() {
                                 />
 
                                 {/* Tombol masuk */}
-                                <button className="bg-blue-600 hover:cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-200">
-                                    Masuk
-                                </button>
+                                <Button
+                                    text="Masuk"
+                                    type="submit"
+                                    textStyle="font-semibold text-white"
+                                    buttonStyle="bg-blue-600 hover:cursor-pointer hover:bg-blue-700 py-2 rounded-lg transition duration-200"
+                                />
                             </form>
 
                             {/* Footer */}
-                            <p className="text-xs text-gray-500 mt-4 text-center">
+                            <footer className="text-xs text-gray-500 mt-4 text-center">
                                 © {new Date().getFullYear()} Bhinneka Dev –
                                 Berkarya untuk Indonesia yang lebih baik.
-                            </p>
+                            </footer>
                         </div>
                     </CardLogin>
                 </div>
