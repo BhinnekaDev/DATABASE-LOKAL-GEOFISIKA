@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
 import { usePathname } from "next/navigation";
+import React, { useState, useEffect } from "react";
 import { IoCloud, IoRainy } from "react-icons/io5";
 import LogoBMKG from "@/components/common/LogoBMKG";
 import { HiOutlineChevronLeft } from "react-icons/hi";
@@ -8,12 +8,29 @@ import SidebarItem from "@/interface/common/SidebarItem";
 import { FaHome, FaGlobeAsia, FaSignOutAlt } from "react-icons/fa";
 
 export default function Sidebar() {
-    const pathname = usePathname(); // Mengambil pathname saat ini untuk menentukan item yang aktif
-    const [collapsed, setCollapsed] = useState(false); // State untuk sidebar collapsed (terlipat)
+    const pathname = usePathname(); // Path saat ini
+    const [isClient, setIsClient] = useState(false); // Cek client-side
+    const [collapsed, setCollapsed] = useState(false); // Sidebar collapse
+
+    useEffect(() => {
+        setIsClient(true); // Set setelah client render
+        const savedState = localStorage.getItem("sidebarCollapsed");
+        if (savedState !== null) {
+            setCollapsed(savedState === "true"); // Ambil dari localStorage
+        }
+    }, []);
+
+    useEffect(() => {
+        if (isClient) {
+            localStorage.setItem("sidebarCollapsed", String(collapsed)); // Simpan ke localStorage
+        }
+    }, [collapsed, isClient]);
 
     const toggleSidebar = () => {
-        setCollapsed(!collapsed); // Toggle state collapsed untuk mengubah ukuran sidebar
+        setCollapsed(!collapsed); // Toggle sidebar
     };
+
+    if (!isClient) return null; // Hindari render di server
 
     return (
         <aside
