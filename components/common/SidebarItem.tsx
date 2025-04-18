@@ -56,7 +56,7 @@ export default function SidebarItem({
             ${collapsed ? "justify-center" : "justify-start"}
         `}
         >
-            <span className="flex justify-center items-center">{icon}</span>{" "}
+            <span className="flex justify-center items-center">{icon}</span>
             {/* Menampilkan ikon */}
             {!collapsed && ( // Menampilkan label hanya jika sidebar tidak ter-collapse
                 <div className="flex items-center justify-between flex-1">
@@ -141,8 +141,8 @@ export default function SidebarItem({
                             {Children.map(children, (child) =>
                                 isValidElement(child)
                                     ? cloneElement(child, {
-                                          collapsed: false, // Menyebarkan props ke dropdown item
-                                      })
+                                          collapsed,
+                                      }) // Menampilkan item dropdown dengan sidebar ter-collapse
                                     : child
                             )}
                         </div>

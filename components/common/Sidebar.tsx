@@ -6,6 +6,7 @@ import LogoBMKG from "@/components/common/LogoBMKG";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import SidebarItem from "@/components/common/SidebarItem";
 import { FaHome, FaGlobeAsia, FaSignOutAlt } from "react-icons/fa";
+import SubSidebarItem from "./SubSidebarItem";
 
 export default function Sidebar() {
     const pathname = usePathname(); // Mendapatkan path saat ini untuk menentukan item sidebar yang aktif
@@ -82,49 +83,20 @@ export default function Sidebar() {
                     setOpenDropdownIndex={setOpenDropdownIndex}
                 >
                     {/* Dropdown untuk Iklim */}
-                    <SidebarItem
+                    <SubSidebarItem
+                        index={1}
                         label="Suhu"
-                        title="Suhu"
                         collapsed={collapsed}
                         active={pathname === "/iklim/suhu"}
-                        icon={
-                            <span
-                                className={`w-2 h-2 rounded-full ${
-                                    collapsed
-                                        ? `${
-                                              isDarkMode
-                                                  ? "bg-white"
-                                                  : "bg-black"
-                                          }`
-                                        : "bg-white"
-                                }`}
-                            />
-                        }
-                        index={2}
-                        openDropdownIndex={openDropdownIndex}
-                        setOpenDropdownIndex={setOpenDropdownIndex}
+                        icon={<span className="w-2 h-2" />}
                     />
-                    <SidebarItem
+                    {/* Dropdown untuk Kelembaban */}
+                    <SubSidebarItem
+                        index={2}
                         label="Kelembaban"
-                        title="Kelembaban"
                         collapsed={collapsed}
                         active={pathname === "/iklim/kelembaban"}
-                        icon={
-                            <span
-                                className={`w-2 h-2 rounded-full ${
-                                    collapsed
-                                        ? `${
-                                              isDarkMode
-                                                  ? "bg-white"
-                                                  : "bg-black"
-                                          }`
-                                        : "bg-white"
-                                }`}
-                            />
-                        }
-                        index={3}
-                        openDropdownIndex={openDropdownIndex}
-                        setOpenDropdownIndex={setOpenDropdownIndex}
+                        icon={<span className="w-2 h-2" />}
                     />
                 </SidebarItem>
 
@@ -139,27 +111,12 @@ export default function Sidebar() {
                     openDropdownIndex={openDropdownIndex}
                     setOpenDropdownIndex={setOpenDropdownIndex}
                 >
-                    <SidebarItem
+                    <SubSidebarItem
+                        index={1}
                         label="Gempa"
-                        title="Gempa"
                         collapsed={collapsed}
                         active={pathname === "/geofisika/gempa"}
-                        icon={
-                            <span
-                                className={`w-2 h-2 rounded-full ${
-                                    collapsed
-                                        ? `${
-                                              isDarkMode
-                                                  ? "bg-white"
-                                                  : "bg-black"
-                                          }`
-                                        : "bg-white"
-                                }`}
-                            />
-                        }
-                        index={5}
-                        openDropdownIndex={openDropdownIndex}
-                        setOpenDropdownIndex={setOpenDropdownIndex}
+                        icon={<span className="w-2 h-2" />}
                     />
                 </SidebarItem>
 
