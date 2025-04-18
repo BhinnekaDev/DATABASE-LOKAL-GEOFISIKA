@@ -40,14 +40,20 @@ export default function Sidebar() {
     return (
         <aside
             className={`relative h-screen bg-slate-800 flex flex-col shadow-lg transition-all duration-300 ease-in-out ${
-                collapsed ? "w-16" : "w-64"
+                collapsed
+                    ? "w-16"
+                    : openDropdownIndex !== null
+                    ? "w-[19.5rem] "
+                    : "w-64"
             }`}
         >
             {/* Bagian Header Sidebar */}
             {/* Menampilkan Logo BMKG dan judul "Database Geofisika" jika sidebar tidak collapsed */}
             <div
                 className={`py-4 flex items-center justify-center border-b border-[#f5f5f7]" ${
-                    collapsed ? "flex justify-center" : "flex justify-between"
+                    collapsed
+                        ? "flex justify-center px-0"
+                        : "flex justify-between px-3"
                 }`}
             >
                 <LogoBMKG /> {/* Logo BMKG */}
@@ -59,7 +65,12 @@ export default function Sidebar() {
             </div>
 
             {/* Bagian Navigasi Sidebar */}
-            <nav className="flex-1 p-4 space-y-4 mt-4">
+            <nav
+                className={`flex-1 p-4 space-y-4 mt-4 ${
+                    !collapsed &&
+                    "overflow-y-auto max-h-[calc(100vh-180px)] scroll-custom"
+                }`}
+            >
                 {/* Item Dashboard */}
                 {/* Sidebar item untuk Dashboard */}
                 <SidebarItem
@@ -76,64 +87,145 @@ export default function Sidebar() {
                 {/* Item Iklim */}
                 {/* Sidebar item untuk Iklim dengan dropdown */}
                 <SidebarItem
+                    index={1}
                     label="Iklim"
                     title="Iklim"
                     collapsed={collapsed}
                     active={pathname.startsWith("/iklim")}
                     icon={<IoCloud className="w-5 h-5" />}
-                    index={1}
                     openDropdownIndex={openDropdownIndex}
                     setOpenDropdownIndex={setOpenDropdownIndex}
                 >
-                    {/* Dropdown untuk Suhu */}
+                    {/* Dropdown untuk Penguapan */}
                     <SubSidebarItem
                         index={1}
-                        label="Suhu"
+                        label="Penguapan"
                         collapsed={collapsed}
-                        active={pathname === "/iklim/suhu"}
                         icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/penguapan"}
                     />
-                    {/* Dropdown untuk Kelembaban */}
+                    {/* Dropdown untuk Hari Hujan */}
                     <SubSidebarItem
                         index={2}
-                        label="Kelembaban"
+                        label="Hari Hujan"
                         collapsed={collapsed}
-                        active={pathname === "/iklim/kelembaban"}
                         icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/hari-hujan"}
+                    />
+                    {/* Dropdown untuk Tekanan Udara */}
+                    <SubSidebarItem
+                        index={3}
+                        label="Tekanan Udara"
+                        collapsed={collapsed}
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/tekanan-udara"}
+                    />
+                    {/* Dropdown untuk Itensitas Hujan */}
+                    <SubSidebarItem
+                        index={4}
+                        label="Itensitas Hujan"
+                        collapsed={collapsed}
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/itensitas-hujan"}
+                    />
+                    {/* Dropdown untuk Kelembaban Udara */}
+                    <SubSidebarItem
+                        index={5}
+                        label="Kelembaban Udara"
+                        collapsed={collapsed}
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/kelembaban-udara"}
+                    />
+                    {/* Dropdown untuk Suhu Udara Rata Rata */}
+                    <SubSidebarItem
+                        index={5}
+                        label="Suhu Udara Rata Rata"
+                        collapsed={collapsed}
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/suhu-udara-rata-rata"}
+                    />
+                    {/* Dropdown untuk Suhu Udara Minimun */}
+                    <SubSidebarItem
+                        index={6}
+                        label="Suhu Udara Minimun"
+                        collapsed={collapsed}
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/suhu-udara-minimun"}
+                    />
+                    {/* Dropdown untuk Suhu Udara Maksimum */}
+                    <SubSidebarItem
+                        index={7}
+                        label="Suhu Udara Maksimum"
+                        collapsed={collapsed}
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/suhu-udara-maksimum"}
+                    />
+                    {/* Dropdown untuk Arah & Kecepatan Angin */}
+                    <SubSidebarItem
+                        index={8}
+                        collapsed={collapsed}
+                        label="Arah & Kecepatan Angin"
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/arah-kecepatan-angin"}
+                    />
+                    {/* Dropdown untuk Lama Penyinaran Matahari */}
+                    <SubSidebarItem
+                        index={8}
+                        collapsed={collapsed}
+                        label="Lama Penyinaran Matahari"
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/lama-penyinaran-matahari"}
                     />
                 </SidebarItem>
 
                 {/* Item Geofisika */}
                 {/* Sidebar item untuk Geofisika dengan dropdown */}
                 <SidebarItem
+                    index={4}
                     label="Geofisika"
                     title="Geofisika"
                     collapsed={collapsed}
+                    openDropdownIndex={openDropdownIndex}
                     active={pathname.startsWith("/geofisika")}
                     icon={<FaGlobeAsia className="w-5 h-5" />}
-                    index={4}
-                    openDropdownIndex={openDropdownIndex}
                     setOpenDropdownIndex={setOpenDropdownIndex}
                 >
+                    {/* Dropdown untuk Petir */}
                     <SubSidebarItem
                         index={1}
+                        label="Petir"
+                        collapsed={collapsed}
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/geofisika/petir"}
+                    />
+                    {/* Dropdown untuk Gempa */}
+                    <SubSidebarItem
+                        index={2}
                         label="Gempa"
                         collapsed={collapsed}
-                        active={pathname === "/geofisika/gempa"}
                         icon={<span className="w-2 h-2" />}
+                        active={pathname === "/geofisika/gempa"}
+                    />
+                    {/* Dropdown untuk Tanda Waktu */}
+                    <SubSidebarItem
+                        index={3}
+                        label="Tanda Waktu"
+                        collapsed={collapsed}
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/geofisika/tanda-waktu"}
                     />
                 </SidebarItem>
 
                 {/* Item Pos Hujan */}
                 {/* Sidebar item untuk Pos Hujan */}
                 <SidebarItem
+                    index={6}
                     label="Pos Hujan"
                     collapsed={collapsed}
                     active={pathname === "/pengaturan"}
+                    openDropdownIndex={openDropdownIndex}
                     icon={<IoRainy className="w-5 h-5" />}
                     title={collapsed ? "Pos Hujan" : undefined}
-                    index={6}
-                    openDropdownIndex={openDropdownIndex}
                     setOpenDropdownIndex={setOpenDropdownIndex}
                 />
             </nav>
@@ -142,13 +234,13 @@ export default function Sidebar() {
             {/* Sidebar item untuk logout */}
             <div className="p-4 border-t border-[#f5f5f7]">
                 <SidebarItem
+                    index={7}
                     label="Keluar"
                     collapsed={collapsed}
                     active={pathname === "/pengaturan"}
-                    icon={<FaSignOutAlt className="w-5 h-5" />}
-                    title={collapsed ? "Keluar" : undefined}
-                    index={7}
                     openDropdownIndex={openDropdownIndex}
+                    title={collapsed ? "Keluar" : undefined}
+                    icon={<FaSignOutAlt className="w-5 h-5" />}
                     setOpenDropdownIndex={setOpenDropdownIndex}
                 />
             </div>

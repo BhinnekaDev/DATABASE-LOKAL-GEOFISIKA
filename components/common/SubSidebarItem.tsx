@@ -6,6 +6,7 @@ import { SidebarItemProps } from "@/interface/common/SidebarItemProps";
 export default function SubSidebarItem({
     icon,
     label,
+    index,
     active,
     collapsed,
 }: SidebarItemProps) {
@@ -15,7 +16,7 @@ export default function SubSidebarItem({
     return (
         <button
             className={`
-                flex items-center gap-3 py-2 px-4 rounded-lg transition-all hover:cursor-pointer group
+                flex text-sm items-center gap-3 py-2 px-4 rounded-lg transition-all hover:cursor-pointer group
                 ${
                     // Mengatur warna latar belakang dan teks berdasarkan status aktif dan dark mode
                     active
@@ -35,9 +36,10 @@ export default function SubSidebarItem({
             `}
         >
             {/* Bagian ikon */}
+
             <span
                 className={`
-                    flex rounded-full transition-all
+                    flex rounded-full transition-all relative
                     ${
                         collapsed
                             ? `${

@@ -3,7 +3,15 @@ import { ChevronDown } from "lucide-react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import { SidebarItemProps } from "@/interface/common/SidebarItemProps";
-import React, { Children, isValidElement, cloneElement, Dispatch } from "react";
+import {
+    useRef,
+    useState,
+    Dispatch,
+    Children,
+    useEffect,
+    cloneElement,
+    isValidElement,
+} from "react";
 
 // Komponen SidebarItem untuk menampilkan item sidebar dengan fitur dropdown
 export default function SidebarItem({
@@ -20,6 +28,12 @@ export default function SidebarItem({
     openDropdownIndex: number | null;
     setOpenDropdownIndex: Dispatch<React.SetStateAction<number | null>>;
 }) {
+    // Referensi untuk elemen dropdown
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+    // State untuk mengatur lebar konten dropdown
+    const [lebarKonten, setLebarKonten] = useState("auto");
+
     // Menentukan apakah mode gelap (dark mode) digunakan
     const isDarkMode = useMedia("(prefers-color-scheme: dark)", false);
 
@@ -38,6 +52,15 @@ export default function SidebarItem({
             }
         }
     };
+
+    // Fungsi untuk menghitung lebar konten dropdown
+    useEffect(() => {
+        if (dropdownRef.current) {
+            // Ambil scrollWidth isi konten
+            const width = dropdownRef.current.scrollWidth;
+            setLebarKonten(`${width}px * 1.5`);
+        }
+    }, [collapsed, openDropdownIndex]);
 
     // Konten untuk button item sidebar, termasuk ikon dan label
     const content = (
@@ -140,14 +163,17 @@ export default function SidebarItem({
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: -10, opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute left-full top-0 z-50 ml-2 w-48 rounded-md shadow-lg p-2"
+                        style={{ width: lebarKonten }}
+                        className="absolute left-full top-0 z-50 ml-4 rounded-md shadow-lg p-2"
                     >
-                        <div className="flex flex-col space-y-2">
-                            {/* Menampilkan item dropdown dengan sidebar ter-collapse */}
+                        <div
+                            ref={dropdownRef}
+                            className="flex flex-col space-y-2 w-max"
+                        >
                             {Children.map(children, (child) =>
                                 isValidElement(child)
                                     ? cloneElement(child, {
-                                          collapsed, // Melemparkan status collapsed ke dalam item dropdown
+                                          collapsed,
                                       })
                                     : child
                             )}

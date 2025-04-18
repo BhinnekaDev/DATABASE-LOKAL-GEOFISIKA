@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+/* ==== Custom Scrollbar Styling ==== */
+
+/* Ukuran scrollbar */
+.scroll-custom::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Latar belakang scrollbar (jalur scroll) */
+.scroll-custom::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Bagian thumb scrollbar (yang digeser) */
+.scroll-custom::-webkit-scrollbar-thumb {
+    background-color: #475569;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Saat elemen utama di-hover, ubah warna thumb */
+.scroll-custom:hover::-webkit-scrollbar-thumb {
+    background-color: #64748b;
+}
