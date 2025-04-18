@@ -11,7 +11,7 @@ export default function LogoBMKG() {
             <Image
                 src={LogoBmkg}
                 alt="Logo BMKG"
-                className="w-12 h-12 object-contain"
+                className="w-10 h-10 md:w-12 md:h-12 object-contain"
                 priority
             />
         </div>

@@ -54,22 +54,24 @@ export default function Sidebar() {
                 collapsed
                     ? "w-16"
                     : openDropdownIndex !== null
-                    ? "w-[19.5rem] "
+                    ? "w-[19.5rem]"
                     : "w-64"
             }`}
         >
             {/* Bagian Header Sidebar */}
             {/* Menampilkan Logo BMKG dan judul "Database Geofisika" jika sidebar tidak collapsed */}
             <div
-                className={`py-4 flex items-center justify-center border-b border-[#f5f5f7]" ${
+                className={`py-4 flex items-center justify-center border-b border-[#f5f7f5]" ${
                     collapsed
                         ? "flex justify-center px-0"
-                        : "flex justify-between px-3"
+                        : "flex justify-between px-3 -ml-4"
                 }`}
             >
                 <LogoBMKG /> {/* Logo BMKG */}
                 {!collapsed && (
-                    <p className={`text-md font-bold text-[#f5f5f7]`}>
+                    <p
+                        className={`text-sm md:text-[1rem] font-bold text-[#f5f5f7]`}
+                    >
                         Database Geofisika
                     </p>
                 )}
