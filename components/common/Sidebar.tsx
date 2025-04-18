@@ -5,8 +5,8 @@ import { IoCloud, IoRainy } from "react-icons/io5";
 import LogoBMKG from "@/components/common/LogoBMKG";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import SidebarItem from "@/components/common/SidebarItem";
+import SubSidebarItem from "@/components/common/SubSidebarItem";
 import { FaHome, FaGlobeAsia, FaSignOutAlt } from "react-icons/fa";
-import SubSidebarItem from "./SubSidebarItem";
 
 export default function Sidebar() {
     const pathname = usePathname(); // Mendapatkan path saat ini untuk menentukan item sidebar yang aktif
@@ -43,14 +43,14 @@ export default function Sidebar() {
                 collapsed ? "w-16" : "w-64"
             }`}
         >
-            {/* Bagian Header Sidebar dengan Logo dan Judul */}
+            {/* Bagian Header Sidebar */}
+            {/* Menampilkan Logo BMKG dan judul "Database Geofisika" jika sidebar tidak collapsed */}
             <div
                 className={`py-4 flex items-center justify-center border-b border-[#f5f5f7]" ${
                     collapsed ? "flex justify-center" : "flex justify-between"
                 }`}
             >
                 <LogoBMKG /> {/* Logo BMKG */}
-                {/* Teks "Database Geofisika" hanya tampil jika sidebar tidak collapsed */}
                 {!collapsed && (
                     <p className={`text-md font-bold text-[#f5f5f7]`}>
                         Database Geofisika
@@ -61,6 +61,7 @@ export default function Sidebar() {
             {/* Bagian Navigasi Sidebar */}
             <nav className="flex-1 p-4 space-y-4 mt-4">
                 {/* Item Dashboard */}
+                {/* Sidebar item untuk Dashboard */}
                 <SidebarItem
                     label="Dashboard"
                     collapsed={collapsed}
@@ -71,7 +72,9 @@ export default function Sidebar() {
                     openDropdownIndex={openDropdownIndex}
                     setOpenDropdownIndex={setOpenDropdownIndex}
                 />
+
                 {/* Item Iklim */}
+                {/* Sidebar item untuk Iklim dengan dropdown */}
                 <SidebarItem
                     label="Iklim"
                     title="Iklim"
@@ -82,7 +85,7 @@ export default function Sidebar() {
                     openDropdownIndex={openDropdownIndex}
                     setOpenDropdownIndex={setOpenDropdownIndex}
                 >
-                    {/* Dropdown untuk Iklim */}
+                    {/* Dropdown untuk Suhu */}
                     <SubSidebarItem
                         index={1}
                         label="Suhu"
@@ -101,6 +104,7 @@ export default function Sidebar() {
                 </SidebarItem>
 
                 {/* Item Geofisika */}
+                {/* Sidebar item untuk Geofisika dengan dropdown */}
                 <SidebarItem
                     label="Geofisika"
                     title="Geofisika"
@@ -121,6 +125,7 @@ export default function Sidebar() {
                 </SidebarItem>
 
                 {/* Item Pos Hujan */}
+                {/* Sidebar item untuk Pos Hujan */}
                 <SidebarItem
                     label="Pos Hujan"
                     collapsed={collapsed}
@@ -134,6 +139,7 @@ export default function Sidebar() {
             </nav>
 
             {/* Item Keluar */}
+            {/* Sidebar item untuk logout */}
             <div className="p-4 border-t border-[#f5f5f7]">
                 <SidebarItem
                     label="Keluar"

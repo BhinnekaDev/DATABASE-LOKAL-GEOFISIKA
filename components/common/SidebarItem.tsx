@@ -20,16 +20,21 @@ export default function SidebarItem({
     openDropdownIndex: number | null;
     setOpenDropdownIndex: Dispatch<React.SetStateAction<number | null>>;
 }) {
-    const isDarkMode = useMedia("(prefers-color-scheme: dark)", false); // Menentukan mode gelap atau terang
-    const isDropdown = !!children; // Menandakan apakah item ini memiliki dropdown
+    // Menentukan apakah mode gelap (dark mode) digunakan
+    const isDarkMode = useMedia("(prefers-color-scheme: dark)", false);
+
+    // Menandakan apakah item memiliki dropdown berdasarkan ada tidaknya children
+    const isDropdown = !!children;
 
     // Fungsi untuk menangani klik pada item, membuka atau menutup dropdown
     const handleClick = () => {
         if (isDropdown) {
+            // Jika dropdown sudah terbuka, tutup dropdown
             if (openDropdownIndex === index) {
-                setOpenDropdownIndex(null); // Tutup dropdown jika item yang sama diklik
+                setOpenDropdownIndex(null);
             } else {
-                setOpenDropdownIndex(index); // Buka dropdown untuk item yang baru
+                // Jika dropdown belum terbuka, buka dropdown untuk item ini
+                setOpenDropdownIndex(index);
             }
         }
     };
@@ -39,22 +44,22 @@ export default function SidebarItem({
         <button
             onClick={handleClick} // Panggil handleClick saat button diklik
             className={`
-            flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-300 ease-in-out
-            ${
-                active
-                    ? `${
-                          isDarkMode
-                              ? "bg-[#18171F] text-[#f5f5f7]"
-                              : "bg-[#f5f5f7] text-[#18171F]"
-                      } rounded-l-full w-[calc(100%+1rem)]`
-                    : `${
-                          isDarkMode
-                              ? "text-[#f5f5f7] hover:bg-[#18171F] hover:text-[#f5f5f7]"
-                              : "text-[#f5f5f7] hover:bg-[#f5f5f7] hover:text-[#18171F]"
-                      } w-full hover:cursor-pointer`
-            }
-            ${collapsed ? "justify-center" : "justify-start"}
-        `}
+                flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-300 ease-in-out
+                ${
+                    active
+                        ? `${
+                              isDarkMode
+                                  ? "bg-[#18171F] text-[#f5f5f7]"
+                                  : "bg-[#f5f5f7] text-[#18171F]"
+                          } rounded-l-full w-[calc(100%+1rem)]`
+                        : `${
+                              isDarkMode
+                                  ? "text-[#f5f5f7] hover:bg-[#18171F] hover:text-[#f5f5f7]"
+                                  : "text-[#f5f5f7] hover:bg-[#f5f5f7] hover:text-[#18171F]"
+                          } w-full hover:cursor-pointer`
+                }
+                ${collapsed ? "justify-center" : "justify-start"}
+            `}
         >
             <span className="flex justify-center items-center">{icon}</span>
             {/* Menampilkan ikon */}
@@ -68,7 +73,7 @@ export default function SidebarItem({
                         <ChevronDown
                             className={`w-4 h-4 transition-transform ${
                                 openDropdownIndex === index
-                                    ? "rotate-180" // Rotasi ikon jika dropdown terbuka
+                                    ? "rotate-180"
                                     : "rotate-0"
                             }`}
                         />
@@ -80,7 +85,7 @@ export default function SidebarItem({
 
     return (
         <div className="relative">
-            {/* Jika sidebar ter-collapse, tampilkan tooltip dengan delay */}
+            {/* Menampilkan tooltip jika sidebar ter-collapse */}
             {collapsed ? (
                 <Tooltip.Provider delayDuration={300}>
                     <Tooltip.Root>
@@ -97,7 +102,7 @@ export default function SidebarItem({
                                     }
                                 `}
                             >
-                                {title}
+                                {title}{" "}
                                 {/* Tooltip dengan judul jika sidebar ter-collapse */}
                                 <Tooltip.Arrow
                                     className={`${
@@ -109,7 +114,7 @@ export default function SidebarItem({
                     </Tooltip.Root>
                 </Tooltip.Provider>
             ) : (
-                content
+                content // Menampilkan konten normal jika sidebar tidak ter-collapse
             )}
 
             {/* Menampilkan dropdown saat sidebar tidak ter-collapse */}
@@ -138,11 +143,12 @@ export default function SidebarItem({
                         className="absolute left-full top-0 z-50 ml-2 w-48 rounded-md shadow-lg p-2"
                     >
                         <div className="flex flex-col space-y-2">
+                            {/* Menampilkan item dropdown dengan sidebar ter-collapse */}
                             {Children.map(children, (child) =>
                                 isValidElement(child)
                                     ? cloneElement(child, {
-                                          collapsed,
-                                      }) // Menampilkan item dropdown dengan sidebar ter-collapse
+                                          collapsed, // Melemparkan status collapsed ke dalam item dropdown
+                                      })
                                     : child
                             )}
                         </div>
