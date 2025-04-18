@@ -2,6 +2,7 @@
 import { useMedia } from "react-use";
 import React, { ReactNode } from "react";
 import Navbar from "@/components/common/Navbar";
+import Footer from "@/components/common/Footer";
 import Sidebar from "@/components/common/Sidebar";
 
 // Komponen layout utama untuk halaman dashboard
@@ -24,8 +25,10 @@ export default function LayoutDashboard({ children }: { children: ReactNode }) {
                 <Navbar />
 
                 {/* Area utama konten halaman */}
-                <main className="p-4">
+                <main className="flex-1 flex flex-col justify-between">
                     {children} {/* Isi halaman akan dirender di sini */}
+                    {/* Footer */}
+                    <Footer />
                 </main>
             </div>
         </section>

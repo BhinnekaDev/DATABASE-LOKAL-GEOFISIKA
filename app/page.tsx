@@ -11,7 +11,8 @@ import FloatingLabelForm from "@/components/common/FloatingLabelForm";
 
 export default function Login() {
     const router = useRouter(); // Inisialisasi router untuk navigasi
-    const isDarkMode = useMedia("(prefers-color-scheme: dark)", false); // Mengetahui mode gelap atau terang yang digunakan
+    // Mengambil preferensi dark mode dari sistem pengguna
+    const isDarkMode = useMedia("(prefers-color-scheme: dark)", false);
 
     return (
         <section className="font-[family-name:var(--font-lexend)] min-h-screen flex items-center justify-center">
@@ -81,7 +82,7 @@ export default function Login() {
 
                             {/* Footer */}
                             <footer className="text-xs text-gray-500 mt-4 text-center">
-                                © {new Date().getFullYear()} Bhinneka Dev –
+                                &copy; {new Date().getFullYear()} Bhinneka Dev –
                                 Berkarya untuk Indonesia yang lebih baik.
                             </footer>
                         </div>

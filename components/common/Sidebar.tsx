@@ -1,4 +1,3 @@
-import { useMedia } from "react-use";
 import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { IoCloud, IoRainy } from "react-icons/io5";
@@ -12,16 +11,28 @@ export default function Sidebar() {
     const pathname = usePathname(); // Mendapatkan path saat ini untuk menentukan item sidebar yang aktif
     const [isClient, setIsClient] = useState(false); // Mengecek apakah aplikasi sedang berjalan di client-side
     const [collapsed, setCollapsed] = useState(false); // Status apakah sidebar dalam keadaan collapsed
-    const isDarkMode = useMedia("(prefers-color-scheme: dark)", false); // Menentukan mode gelap atau terang
     const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(
         null
     ); // Index dropdown yang dibuka
 
     useEffect(() => {
-        setIsClient(true); // Menandakan bahwa komponen telah di-render di sisi client
+        // Menandakan bahwa komponen telah dirender di sisi client
+        setIsClient(true);
+
+        // Cek apakah saat ini dalam tampilan mobile (lebar layar < 768px)
+        const isMobile = window.innerWidth < 768;
+
+        // Ambil status collapsed dari localStorage (jika ada)
         const savedState = localStorage.getItem("sidebarCollapsed");
-        if (savedState !== null) {
-            setCollapsed(savedState === "true"); // Memeriksa dan mengatur status collapse berdasarkan localStorage
+
+        if (isMobile) {
+            // Jika di mobile, sidebar otomatis collapsed
+            setCollapsed(true);
+            // Simpan status collapsed ke localStorage agar konsisten
+            localStorage.setItem("sidebarCollapsed", "true");
+        } else if (savedState !== null) {
+            // Jika bukan mobile dan ada data di localStorage, gunakan data tersebut
+            setCollapsed(savedState === "true");
         }
     }, []);
 
