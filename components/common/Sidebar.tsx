@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { IoCloud, IoRainy } from "react-icons/io5";
@@ -7,6 +8,7 @@ import SidebarItem from "@/components/common/SidebarItem";
 import SubSidebarItem from "@/components/common/SubSidebarItem";
 import { FaHome, FaGlobeAsia, FaSignOutAlt } from "react-icons/fa";
 
+// komponen untuk menampilkan sidebar
 export default function Sidebar() {
     const pathname = usePathname(); // Mendapatkan path saat ini untuk menentukan item sidebar yang aktif
     const [isClient, setIsClient] = useState(false); // Mengecek apakah aplikasi sedang berjalan di client-side
@@ -49,14 +51,13 @@ export default function Sidebar() {
     if (!isClient) return null; // Menghindari render pada server
 
     return (
-        <aside
-            className={`relative h-screen bg-slate-800 flex flex-col shadow-lg transition-all duration-300 ease-in-out ${
-                collapsed
-                    ? "w-16"
-                    : openDropdownIndex !== null
-                    ? "w-[19.5rem]"
-                    : "w-64"
-            }`}
+        <motion.aside
+            initial={{ width: 64 }}
+            animate={{
+                width: collapsed ? 64 : openDropdownIndex !== null ? 312 : 256,
+            }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="relative h-screen bg-slate-800 flex flex-col shadow-lg"
         >
             {/* Bagian Header Sidebar */}
             {/* Menampilkan Logo BMKG dan judul "Database Geofisika" jika sidebar tidak collapsed */}
@@ -87,12 +88,12 @@ export default function Sidebar() {
                 {/* Item Dashboard */}
                 {/* Sidebar item untuk Dashboard */}
                 <SidebarItem
+                    index={0}
                     label="Dashboard"
                     collapsed={collapsed}
                     active={pathname === "/dashboard"}
                     icon={<FaHome className="w-5 h-5" />}
                     title={collapsed ? "Dashboard" : undefined}
-                    index={0}
                     openDropdownIndex={openDropdownIndex}
                     setOpenDropdownIndex={setOpenDropdownIndex}
                 />
@@ -109,21 +110,21 @@ export default function Sidebar() {
                     openDropdownIndex={openDropdownIndex}
                     setOpenDropdownIndex={setOpenDropdownIndex}
                 >
-                    {/* Dropdown untuk Penguapan */}
-                    <SubSidebarItem
-                        index={1}
-                        label="Penguapan"
-                        collapsed={collapsed}
-                        icon={<span className="w-2 h-2" />}
-                        active={pathname === "/iklim/penguapan"}
-                    />
                     {/* Dropdown untuk Hari Hujan */}
                     <SubSidebarItem
-                        index={2}
+                        index={1}
                         label="Hari Hujan"
                         collapsed={collapsed}
                         icon={<span className="w-2 h-2" />}
                         active={pathname === "/iklim/hari-hujan"}
+                    />
+                    {/* Dropdown untuk Penguapan */}
+                    <SubSidebarItem
+                        index={2}
+                        label="Penguapan"
+                        collapsed={collapsed}
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/penguapan"}
                     />
                     {/* Dropdown untuk Tekanan Udara */}
                     <SubSidebarItem
@@ -149,14 +150,6 @@ export default function Sidebar() {
                         icon={<span className="w-2 h-2" />}
                         active={pathname === "/iklim/kelembaban-udara"}
                     />
-                    {/* Dropdown untuk Suhu Udara Rata Rata */}
-                    <SubSidebarItem
-                        index={5}
-                        label="Suhu Udara Rata Rata"
-                        collapsed={collapsed}
-                        icon={<span className="w-2 h-2" />}
-                        active={pathname === "/iklim/suhu-udara-rata-rata"}
-                    />
                     {/* Dropdown untuk Suhu Udara Minimun */}
                     <SubSidebarItem
                         index={6}
@@ -165,9 +158,17 @@ export default function Sidebar() {
                         icon={<span className="w-2 h-2" />}
                         active={pathname === "/iklim/suhu-udara-minimun"}
                     />
-                    {/* Dropdown untuk Suhu Udara Maksimum */}
+                    {/* Dropdown untuk Suhu Udara Rata Rata */}
                     <SubSidebarItem
                         index={7}
+                        label="Suhu Udara Rata Rata"
+                        collapsed={collapsed}
+                        icon={<span className="w-2 h-2" />}
+                        active={pathname === "/iklim/suhu-udara-rata-rata"}
+                    />
+                    {/* Dropdown untuk Suhu Udara Maksimum */}
+                    <SubSidebarItem
+                        index={8}
                         label="Suhu Udara Maksimum"
                         collapsed={collapsed}
                         icon={<span className="w-2 h-2" />}
@@ -175,7 +176,7 @@ export default function Sidebar() {
                     />
                     {/* Dropdown untuk Arah & Kecepatan Angin */}
                     <SubSidebarItem
-                        index={8}
+                        index={9}
                         collapsed={collapsed}
                         label="Arah & Kecepatan Angin"
                         icon={<span className="w-2 h-2" />}
@@ -183,7 +184,7 @@ export default function Sidebar() {
                     />
                     {/* Dropdown untuk Lama Penyinaran Matahari */}
                     <SubSidebarItem
-                        index={8}
+                        index={10}
                         collapsed={collapsed}
                         label="Lama Penyinaran Matahari"
                         icon={<span className="w-2 h-2" />}
@@ -194,7 +195,7 @@ export default function Sidebar() {
                 {/* Item Geofisika */}
                 {/* Sidebar item untuk Geofisika dengan dropdown */}
                 <SidebarItem
-                    index={4}
+                    index={2}
                     label="Geofisika"
                     title="Geofisika"
                     collapsed={collapsed}
@@ -232,7 +233,7 @@ export default function Sidebar() {
                 {/* Item Pos Hujan */}
                 {/* Sidebar item untuk Pos Hujan */}
                 <SidebarItem
-                    index={6}
+                    index={3}
                     label="Pos Hujan"
                     collapsed={collapsed}
                     active={pathname === "/pengaturan"}
@@ -247,7 +248,7 @@ export default function Sidebar() {
             {/* Sidebar item untuk logout */}
             <div className="p-4 border-t border-[#f5f5f7]">
                 <SidebarItem
-                    index={7}
+                    index={4}
                     label="Keluar"
                     collapsed={collapsed}
                     active={pathname === "/pengaturan"}
@@ -270,6 +271,6 @@ export default function Sidebar() {
                     className={`w-5 h-5 ${collapsed ? "rotate-180" : ""}`}
                 />
             </button>
-        </aside>
+        </motion.aside>
     );
 }
