@@ -6,7 +6,6 @@ import { SidebarItemProps } from "@/interface/common/SidebarItemProps";
 export default function SubSidebarItem({
     icon,
     label,
-    index,
     active,
     collapsed,
 }: SidebarItemProps) {
@@ -24,14 +23,30 @@ export default function SubSidebarItem({
                             ? "bg-[#18171F]"
                             : "bg-[#f5f5f7]"
                         : isDarkMode
-                        ? "text-white hover:bg-[#f5f5f7] hover:text-black"
-                        : "text-black hover:bg-[#18171F] hover:text-white"
+                        ? "hover:bg-[#f5f5f7] hover:text-black"
+                        : "hover:bg-[#18171F] hover:text-white"
                 }
                 ${
                     // Mengatur warna teks saat collapsed (terlipat) berdasarkan dark mode
                     collapsed
-                        ? `${isDarkMode ? "text-white" : "text-black"}`
-                        : `text-white`
+                        ? `${
+                              !active
+                                  ? `${
+                                        isDarkMode ? "text-white" : "text-black"
+                                    }`
+                                  : `${
+                                        isDarkMode
+                                            ? "text-black bg-white"
+                                            : "text-white bg-black"
+                                    }`
+                          }`
+                        : `${
+                              !active
+                                  ? `text-white`
+                                  : `${
+                                        isDarkMode ? "text-white" : "text-black"
+                                    }`
+                          }`
                 }
             `}
         >
@@ -43,17 +58,29 @@ export default function SubSidebarItem({
                     ${
                         collapsed
                             ? `${
-                                  // Mengatur warna latar belakang ikon saat collapsed
-                                  isDarkMode
-                                      ? "bg-white group-hover:bg-black"
-                                      : "bg-black group-hover:bg-white"
+                                  // Mengatur warna latar belakang ikon saat terlipat
+                                  !active
+                                      ? `${
+                                            isDarkMode
+                                                ? "bg-white group-hover:bg-black"
+                                                : "bg-black group-hover:bg-white"
+                                        }`
+                                      : `${
+                                            isDarkMode ? "bg-black" : "bg-white"
+                                        }`
                               }`
-                            : `${
-                                  // Mengatur warna latar belakang ikon saat tidak collapsed
-                                  isDarkMode
-                                      ? "bg-white group-hover:bg-black"
-                                      : "bg-white group-hover:bg-white"
-                              }`
+                            : `
+                            ${
+                                // Mengatur warna latar belakang ikon saat tidak collapsed dan berdasarkan status aktif
+                                !active
+                                    ? `${
+                                          isDarkMode
+                                              ? "bg-white group-hover:bg-black"
+                                              : "bg-white group-hover:bg-white"
+                                      }`
+                                    : `${isDarkMode ? "bg-white" : "bg-black"}`
+                            }
+                           `
                     }
                 `}
             >
