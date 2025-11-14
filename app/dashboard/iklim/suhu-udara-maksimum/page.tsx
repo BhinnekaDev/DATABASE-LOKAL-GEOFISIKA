@@ -171,7 +171,7 @@ export default function SuhuUdaraMaksimumPage() {
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-gray-700 hover:bg-gray-100 transition">
                   <FiUpload size={16} />
-                  <span>Upload File (.csv / .xlsx)</span>
+                  <span>{file ? file.name : "Pilih file (.csv, .xlsx)"}</span>
                   <input
                     type="file"
                     accept=".csv,.xlsx"
